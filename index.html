@@ -20,24 +20,24 @@
         📈
       </div>
       <div>
-        <h1 class="font-bold text-lg text-white leading-tight">TradeJournal & Target</h1>
+        <h1 class="font-bold text-base sm:text-lg text-white leading-tight">TradeJournal & Target</h1>
         <p class="text-xs text-slate-400">Akun Trading USC / USD</p>
       </div>
     </div>
-    <div class="flex items-center space-x-3">
-      <button onclick="openTradeModal()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-sm shadow-sm flex items-center space-x-2 cursor-pointer active:scale-95">
-        <span>+ Catat Transaksi Trade</span>
+    <div class="flex items-center space-x-2 sm:space-x-3">
+      <button onclick="openTradeModal()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm shadow-sm flex items-center space-x-1.5 sm:space-x-2 cursor-pointer active:scale-95">
+        <span>+ <span class="hidden sm:inline">Catat </span>Trade</span>
       </button>
-      <button onclick="openAccountModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium px-4 py-2 rounded-xl text-sm border border-slate-700 shadow-sm flex items-center space-x-2 cursor-pointer active:scale-95">
-        <span>⚙️ Atur Modal & Target</span>
+      <button onclick="openAccountModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm border border-slate-700 shadow-sm flex items-center space-x-1.5 sm:space-x-2 cursor-pointer active:scale-95">
+        <span>⚙️ <span class="hidden sm:inline">Atur </span>Target</span>
       </button>
     </div>
   </div>
 </header>
 
-<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full space-y-8">
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 flex-1 w-full space-y-6 sm:space-y-8">
   
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
     <!-- Current Equity / Saldo Sekarang -->
     <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800 shadow-sm flex flex-col justify-between">
       <div class="flex items-center justify-between">
@@ -45,7 +45,7 @@
         <span class="p-2 rounded-lg bg-emerald-500/10 text-emerald-400 text-sm">💰</span>
       </div>
       <div class="mt-4">
-        <h3 id="statEquity" class="text-2xl font-bold text-white">0 USC</h3>
+        <h3 id="statEquity" class="text-xl sm:text-2xl font-bold text-white">0 USC</h3>
         <p id="statInitialDisplay" class="text-xs text-slate-400 mt-1">Modal Awal: 0 USC</p>
       </div>
     </div>
@@ -57,7 +57,7 @@
         <span id="statNetIcon" class="p-2 rounded-lg bg-blue-500/10 text-blue-400 text-sm">📊</span>
       </div>
       <div class="mt-4">
-        <h3 id="statNetProfit" class="text-2xl font-bold text-white">0 USC</h3>
+        <h3 id="statNetProfit" class="text-xl sm:text-2xl font-bold text-white">0 USC</h3>
         <p id="statGrowthPercent" class="text-xs text-slate-400 mt-1">Growth: 0%</p>
       </div>
     </div>
@@ -69,7 +69,7 @@
         <span class="p-2 rounded-lg bg-indigo-500/10 text-indigo-400 text-sm">🎯</span>
       </div>
       <div class="mt-4">
-        <h3 id="statWinRate" class="text-2xl font-bold text-white">0%</h3>
+        <h3 id="statWinRate" class="text-xl sm:text-2xl font-bold text-white">0%</h3>
         <p id="statTradeCounts" class="text-xs text-slate-400 mt-1">0 Win | 0 Loss | 0 BEP</p>
       </div>
     </div>
@@ -81,16 +81,16 @@
         <span class="p-2 rounded-lg bg-amber-500/10 text-amber-400 text-sm">🏆</span>
       </div>
       <div class="mt-4">
-        <h3 id="statTargetAmount" class="text-2xl font-bold text-white">0 USC</h3>
+        <h3 id="statTargetAmount" class="text-xl sm:text-2xl font-bold text-white">0 USC</h3>
         <p id="statTargetProgress" class="text-xs text-amber-400 font-medium mt-1">0% tercapai</p>
       </div>
     </div>
   </div>
 
-  <section class="bg-slate-950 rounded-2xl border border-slate-800 p-6 shadow-sm">
+  <section class="bg-slate-950 rounded-2xl border border-slate-800 p-5 sm:p-6 shadow-sm">
     <div class="flex items-center justify-between mb-4">
       <div>
-        <h2 class="text-lg font-bold text-white">Target Pertumbuhan Akun</h2>
+        <h2 class="text-base sm:text-lg font-bold text-white">Target Pertumbuhan Akun</h2>
         <p class="text-xs text-slate-400">Progress equity Anda menuju target saldo impian</p>
       </div>
       <button onclick="openAccountModal()" class="text-xs font-semibold text-emerald-400 hover:text-emerald-300 bg-emerald-500/10 px-3 py-2 rounded-xl transition cursor-pointer">
@@ -98,7 +98,7 @@
       </button>
     </div>
     <div class="space-y-3">
-      <div class="flex justify-between text-sm font-medium">
+      <div class="flex justify-between text-xs sm:text-sm font-medium">
         <span id="targetStatusText" class="text-slate-300">Progress: 0%</span>
         <span id="targetValuesText" class="text-white font-bold">0 USC / 0 USC</span>
       </div>
@@ -108,13 +108,13 @@
     </div>
   </section>
 
-  <section class="bg-slate-950 rounded-2xl border border-slate-800 p-6 shadow-sm">
+  <section class="bg-slate-950 rounded-2xl border border-slate-800 p-5 sm:p-6 shadow-sm overflow-hidden">
     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
       <div>
-        <h2 class="text-lg font-bold text-white">Riwayat Transaksi Trading</h2>
+        <h2 class="text-base sm:text-lg font-bold text-white">Riwayat Transaksi Trading</h2>
         <p class="text-xs text-slate-400">Catatan posisi profit, loss, atau break even point (BEP)</p>
       </div>
-      <div class="flex items-center space-x-3 w-full sm:w-auto">
+      <div class="flex items-center space-x-3 w-full sm:w-auto justify-between sm:justify-start">
         <select id="filterResult" onchange="renderTrades()" class="text-xs border border-slate-700 rounded-xl px-3 py-2 bg-slate-900 text-slate-300 outline-none focus:border-emerald-500">
           <option value="all">Semua Hasil</option>
           <option value="PROFIT">Profit</option>
@@ -127,21 +127,23 @@
       </div>
     </div>
 
-    <div class="overflow-x-auto">
-      <table class="w-full text-left border-collapse">
-        <thead>
-          <tr class="border-b border-slate-800 text-xs font-semibold text-slate-400 uppercase tracking-wider">
-            <th class="py-3 px-4">Tanggal</th>
-            <th class="py-3 px-4">Instrumen / Setup</th>
-            <th class="py-3 px-4">Hasil</th>
-            <th class="py-3 px-4 text-right">Nominal P/L (USC)</th>
-            <th class="py-3 px-4 text-center">Aksi</th>
-          </tr>
-        </thead>
-        <tbody id="tradeTableBody" class="divide-y divide-slate-800/60 text-sm">
-          <!-- Trades rendered dynamically -->
-        </tbody>
-      </table>
+    <div class="overflow-x-auto -mx-5 sm:mx-0">
+      <div class="inline-block min-w-full align-middle px-5 sm:px-0">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="border-b border-slate-800 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+              <th class="py-3 px-3 sm:px-4">Tanggal</th>
+              <th class="py-3 px-3 sm:px-4">Instrumen / Setup</th>
+              <th class="py-3 px-3 sm:px-4">Hasil</th>
+              <th class="py-3 px-3 sm:px-4 text-right">Nominal P/L (USC)</th>
+              <th class="py-3 px-3 sm:px-4 text-center">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="tradeTableBody" class="divide-y divide-slate-800/60 text-xs sm:text-sm">
+            <!-- Trades rendered dynamically -->
+          </tbody>
+        </table>
+      </div>
     </div>
   </section>
 </main>
@@ -153,8 +155,8 @@
 <div id="tradeModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
   <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl">
     <div class="flex items-center justify-between mb-4">
-      <h3 class="font-bold text-lg text-white">Catat Transaksi Trading</h3>
-      <button onclick="closeTradeModal()" class="text-slate-400 hover:text-white text-sm font-bold">✕</button>
+      <h3 class="font-bold text-base sm:text-lg text-white">Catat Transaksi Trading</h3>
+      <button onclick="closeTradeModal()" class="text-slate-400 hover:text-white text-sm font-bold p-1 cursor-pointer">✕</button>
     </div>
     <form id="tradeForm" onsubmit="handleTradeSubmit(event)" class="space-y-4">
       <div>
@@ -176,7 +178,7 @@
       </div>
       <div>
         <label class="block text-xs font-semibold text-slate-300 mb-1">Instrumen / Keterangan Setup</label>
-        <input type="text" id="tradePair" required placeholder="Contoh: XAUUSD / BTCUSDT / EURUSD" class="w-full text-sm border border-slate-700 bg-slate-950 text-white rounded-xl px-3.5 py-2.5 outline-none focus:border-emerald-500">
+        <input type="text" id="tradePair" required placeholder="Contoh: XAUUSD / BTCUSDT" class="w-full text-sm border border-slate-700 bg-slate-950 text-white rounded-xl px-3.5 py-2.5 outline-none focus:border-emerald-500">
       </div>
       <div>
         <label class="block text-xs font-semibold text-slate-300 mb-1">Nominal P/L (USC)</label>
@@ -198,8 +200,8 @@
 <div id="accountModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
   <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl">
     <div class="flex items-center justify-between mb-4">
-      <h3 class="font-bold text-lg text-white">Pengaturan Modal & Target Akun</h3>
-      <button onclick="closeAccountModal()" class="text-slate-400 hover:text-white text-sm font-bold">✕</button>
+      <h3 class="font-bold text-base sm:text-lg text-white">Pengaturan Modal & Target Akun</h3>
+      <button onclick="closeAccountModal()" class="text-slate-400 hover:text-white text-sm font-bold p-1 cursor-pointer">✕</button>
     </div>
     <form id="accountForm" onsubmit="handleAccountSubmit(event)" class="space-y-4">
       <div>
@@ -329,7 +331,7 @@
     // Net P/L
     const netEl = document.getElementById('statNetProfit');
     netEl.textContent = formatUSC(totalProfitLoss);
-    netEl.className = `text-2xl font-bold ${totalProfitLoss >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
+    netEl.className = `text-xl sm:text-2xl font-bold ${totalProfitLoss >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
     document.getElementById('statGrowthPercent').textContent = `Growth: ${growthPercent >= 0 ? '+' : ''}${growthPercent}%`;
 
     // Win Rate & Counts
@@ -357,7 +359,7 @@
 
     if (filtered.length === 0) {
       const tr = document.createElement('tr');
-      tr.innerHTML = `<td colspan="5" class="py-8 text-center text-slate-500 text-sm">Belum ada catatan transaksi trading.</td>`;
+      tr.innerHTML = `<td colspan="5" class="py-8 text-center text-slate-500 text-xs sm:text-sm">Belum ada catatan transaksi trading.</td>`;
       tbody.appendChild(tr);
       return;
     }
@@ -381,18 +383,18 @@
       }
 
       tr.innerHTML = `
-        <td class="py-3 px-4 text-slate-400 text-xs">${t.date}</td>
-        <td class="py-3 px-4 font-medium text-white">${t.pair}</td>
-        <td class="py-3 px-4">
-          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold ${badgeClass}">
+        <td class="py-3 px-3 sm:px-4 text-slate-400 text-xs">${t.date}</td>
+        <td class="py-3 px-3 sm:px-4 font-medium text-white text-xs sm:text-sm">${t.pair}</td>
+        <td class="py-3 px-3 sm:px-4">
+          <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-bold ${badgeClass}">
             ${t.result}
           </span>
         </td>
-        <td class="py-3 px-4 text-right font-semibold ${amountColor}">
+        <td class="py-3 px-3 sm:px-4 text-right font-semibold text-xs sm:text-sm ${amountColor}">
           ${t.result === 'BEP' ? formatUSC(0) : amountSign + formatUSC(t.amount)}
         </td>
-        <td class="py-3 px-4 text-center">
-          <button onclick="deleteTrade('${t.id}')" class="text-slate-500 hover:text-rose-400 p-1 text-xs font-bold cursor-pointer" title="Hapus">✕</button>
+        <td class="py-3 px-3 sm:px-4 text-center">
+          <button onclick="deleteTrade('${t.id}')" class="text-slate-500 hover:text-rose-400 p-1.5 text-xs font-bold cursor-pointer" title="Hapus">✕</button>
         </td>
       `;
       tbody.appendChild(tr);

@@ -305,27 +305,28 @@
     return Number(num).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 }) + ' USC';
   }
 
-  document.getElementById('tradeDate').valueAsDate = new Date();
-
-  function openTradeModal() {
+  // Ensure global scope for event handlers
+  window.openTradeModal = function() {
     document.getElementById('tradeModal').classList.remove('hidden');
-  }
-  function closeTradeModal() {
+  };
+
+  window.closeTradeModal = function() {
     document.getElementById('tradeModal').classList.add('hidden');
     document.getElementById('tradeForm').reset();
     document.getElementById('tradeDate').valueAsDate = new Date();
-  }
+  };
 
-  function openAccountModal() {
+  window.openAccountModal = function() {
     document.getElementById('inputInitialDeposit').value = state.initialDeposit;
     document.getElementById('inputTargetAmount').value = state.targetAmount;
     document.getElementById('accountModal').classList.remove('hidden');
-  }
-  function closeAccountModal() {
-    document.getElementById('accountModal').classList.add('hidden');
-  }
+  };
 
-  function handleTradeSubmit(e) {
+  window.closeAccountModal = function() {
+    document.getElementById('accountModal').classList.add('hidden');
+  };
+
+  window.handleTradeSubmit = function(e) {
     e.preventDefault();
     const result = document.querySelector('input[name="tradeResult"]:checked').value;
     const pair = document.getElementById('tradePair').value;
@@ -341,31 +342,83 @@
       amount
     };
 
-    state.trades.unshift(newTrade);
+    state.trades.push(newTrade);
     saveState();
-    closeTradeModal();
+    window.closeTradeModal();
     initApp();
-  }
+  };
 
-  function handleAccountSubmit(e) {
+  window.handleAccountSubmit = function(e) {
     e.preventDefault();
     state.initialDeposit = parseFloat(document.getElementById('inputInitialDeposit').value) || 0;
     state.targetAmount = parseFloat(document.getElementById('inputTargetAmount').value) || 0;
     saveState();
-    closeAccountModal();
+    window.closeAccountModal();
     initApp();
-  }
+  };
 
-  function deleteTrade(id) {
+  window.deleteTrade = function(id) {
     state.trades = state.trades.filter(t => t.id !== id);
     saveState();
     initApp();
-  }
+  };
+
+  window.renderTrades = function() {
+    const filterRes = document.getElementById('filterResult').value;
+    const tbody = document.getElementById('tradeTableBody');
+    tbody.replaceChildren();
+
+    const displayTrades = [...state.trades].reverse();
+    const filtered = displayTrades.filter(t => filterRes === 'all' || t.result === filterRes);
+
+    if (filtered.length === 0) {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td colspan="5" class="py-8 text-center text-slate-500 text-xs sm:text-sm">Belum ada catatan transaksi trading.</td>`;
+      tbody.appendChild(tr);
+      return;
+    }
+
+    filtered.forEach(t => {
+      const tr = document.createElement('tr');
+      tr.className = 'hover:bg-slate-900/60 transition-colors';
+      
+      let badgeClass = 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20';
+      let amountSign = '+';
+      let amountColor = 'text-emerald-400';
+
+      if (t.result === 'LOSS') {
+        badgeClass = 'bg-rose-500/10 text-rose-400 border border-rose-500/20';
+        amountSign = '-';
+        amountColor = 'text-rose-400';
+      } else if (t.result === 'BEP') {
+        badgeClass = 'bg-blue-500/10 text-blue-400 border border-blue-500/20';
+        amountSign = '';
+        amountColor = 'text-blue-400';
+      }
+
+      tr.innerHTML = `
+        <td class="py-3 px-3 sm:px-4 text-slate-400 text-xs font-medium">${t.date}</td>
+        <td class="py-3 px-3 sm:px-4 font-semibold text-white text-xs sm:text-sm">${t.pair}</td>
+        <td class="py-3 px-3 sm:px-4">
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-extrabold ${badgeClass}">
+            ${t.result}
+          </span>
+        </td>
+        <td class="py-3 px-3 sm:px-4 text-right font-bold text-xs sm:text-sm ${amountColor}">
+          ${t.result === 'BEP' ? formatUSC(0) : amountSign + formatUSC(t.amount)}
+        </td>
+        <td class="py-3 px-3 sm:px-4 text-center">
+          <button onclick="deleteTrade('${t.id}')" class="text-slate-500 hover:text-rose-400 p-1.5 text-xs font-bold cursor-pointer transition-colors" title="Hapus">✕</button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  };
 
   function initApp() {
     renderStats();
     renderCharts();
-    renderTrades();
+    window.renderTrades();
   }
 
   function renderStats() {
@@ -380,7 +433,6 @@
     let currentStreak = 0;
     let maxStreak = 0;
 
-    // Process sorted chronologically for stats & streak calculation
     const chronologicalTrades = [...state.trades].sort((a, b) => new Date(a.date) - new Date(b.date));
 
     chronologicalTrades.forEach(t => {
@@ -409,7 +461,6 @@
     const avgLoss = lossCount > 0 ? (totalLossAmount / lossCount) : 0;
     const profitFactor = totalLossAmount > 0 ? (totalWinAmount / totalLossAmount).toFixed(2) : (totalWinAmount > 0 ? '∞' : '0.00');
 
-    // KPI Displays
     document.getElementById('statEquity').textContent = formatUSC(currentEquity);
     document.getElementById('statInitialDisplay').textContent = `Modal Awal: ${formatUSC(state.initialDeposit)}`;
 
@@ -430,7 +481,6 @@
     document.getElementById('targetValuesText').textContent = `${formatUSC(currentEquity)} / ${formatUSC(state.targetAmount)}`;
     document.getElementById('targetProgressBar').style.width = `${targetProgress}%`;
 
-    // Advanced Stats Breakdown
     document.getElementById('statAvgWin').textContent = formatUSC(avgWin);
     document.getElementById('statAvgLoss').textContent = formatUSC(avgLoss);
     document.getElementById('statProfitFactor').textContent = profitFactor;
@@ -438,8 +488,7 @@
   }
 
   function renderCharts() {
-    // 1. Prepare Equity Line Chart Data
-    const chronologicalTrades = [...state.trades].sort((a, b) => new Date(a.date) - new Date(b.date));
+    const chronologicalTrades = [...state.trades].sort((a, b) => new Date(a.date) - new Date(b.date) || a.id.localeCompare(b.id));
     const labels = ['Awal'];
     const equityData = [state.initialDeposit];
     
@@ -488,7 +537,6 @@
       }
     });
 
-    // 2. Prepare Win/Loss Doughnut Chart Data
     let wins = 0, losses = 0, beps = 0;
     state.trades.forEach(t => {
       if (t.result === 'PROFIT') wins++;
@@ -523,57 +571,8 @@
     });
   }
 
-  function renderTrades() {
-    const filterRes = document.getElementById('filterResult').value;
-    const tbody = document.getElementById('tradeTableBody');
-    tbody.replaceChildren();
-
-    const filtered = state.trades.filter(t => filterRes === 'all' || t.result === filterRes);
-
-    if (filtered.length === 0) {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `<td colspan="5" class="py-8 text-center text-slate-500 text-xs sm:text-sm">Belum ada catatan transaksi trading.</td>`;
-      tbody.appendChild(tr);
-      return;
-    }
-
-    filtered.forEach(t => {
-      const tr = document.createElement('tr');
-      tr.className = 'hover:bg-slate-900/60 transition-colors';
-      
-      let badgeClass = 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20';
-      let amountSign = '+';
-      let amountColor = 'text-emerald-400';
-
-      if (t.result === 'LOSS') {
-        badgeClass = 'bg-rose-500/10 text-rose-400 border border-rose-500/20';
-        amountSign = '-';
-        amountColor = 'text-rose-400';
-      } else if (t.result === 'BEP') {
-        badgeClass = 'bg-blue-500/10 text-blue-400 border border-blue-500/20';
-        amountSign = '';
-        amountColor = 'text-blue-400';
-      }
-
-      tr.innerHTML = `
-        <td class="py-3 px-3 sm:px-4 text-slate-400 text-xs font-medium">${t.date}</td>
-        <td class="py-3 px-3 sm:px-4 font-semibold text-white text-xs sm:text-sm">${t.pair}</td>
-        <td class="py-3 px-3 sm:px-4">
-          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-extrabold ${badgeClass}">
-            ${t.result}
-          </span>
-        </td>
-        <td class="py-3 px-3 sm:px-4 text-right font-bold text-xs sm:text-sm ${amountColor}">
-          ${t.result === 'BEP' ? formatUSC(0) : amountSign + formatUSC(t.amount)}
-        </td>
-        <td class="py-3 px-3 sm:px-4 text-center">
-          <button onclick="deleteTrade('${t.id}')" class="text-slate-500 hover:text-rose-400 p-1.5 text-xs font-bold cursor-pointer transition-colors" title="Hapus">✕</button>
-        </td>
-      `;
-      tbody.appendChild(tr);
-    });
-  }
-
+  // Set default date and init
+  document.getElementById('tradeDate').valueAsDate = new Date();
   initApp();
 </script>
 </body>
